@@ -41,12 +41,13 @@ const wss = new ws.Server({ host : 'localhost', port : port });
 wss.on('connection', (c) => {
   c.on('message', (data) => {
     const o = JSON.parse(data);
-    const args = o.args ? o.args : [];
-    const proc = execFile("z3", args.concat(['-smt2', '-in']), execOptions, (error, stdout) => {
-      if (error) c.send(JSON.stringify({ status : false, output : stdout }));
-      else c.send(JSON.stringify({ status : true, output : stdout }));
-    });
-    if (o.input) proc.stdin.write(o.input + '\n(exit)\n');
+    if (o.input) {
+      const args = o.args ? o.args : [];
+      const proc = execFile("z3", args.concat(['-smt2', '-in']), execOptions, (error, stdout) => {
+        c.send(JSON.stringify({ status : !error, output : stdout }));
+      });
+      proc.stdin.write(o.input + '\n(exit)\n');
+    } else c.send(JSON.stringify({ status : !false, output : stdout }));
   });
 });
 
