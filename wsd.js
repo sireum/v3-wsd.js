@@ -51,7 +51,7 @@ wss.on('connection', (c) => {
       const proc = execFile("z3", args.concat(['-smt2', '-in']), execOptions, (error, stdout) => {
         send(!error, stdout);
       });
-      proc.stdin.write(o.input + '\n(exit)\n');
+      proc.stdin.end(o.input);
     } else send(false, "");
   });
 });
