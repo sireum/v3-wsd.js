@@ -32,7 +32,7 @@ const port           = argv.length == 1 ? argv[0] : defaultPort;
 const execOptions    = { maxBuffer : 2 * 1024 * 1024 };
 
 if (argv.help || argv.h || isNaN(port) || argv.length > 1) {
-  console.log('Usage: z3wsd.js [<port> (default: ' + defaultPort + ')]');
+  console.log('Usage: wsd.js [<port> (default: ' + defaultPort + ')]');
   return;
 }
 
