@@ -46,7 +46,7 @@ wss.on('connection', (c) => {
       if (o.id) r.id = o.id;
       c.send(JSON.stringify(r));
     };
-    if (o.input) {
+    if (o.service == "z3" && o.input) {
       const args = o.args ? o.args : [];
       const proc = execFile("z3", args.concat(['-smt2', '-in']), execOptions, (error, stdout) => {
         send(!error, stdout);
